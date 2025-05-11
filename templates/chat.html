@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutmegAI - Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+        
+        .chat-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .chat-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .chat-logo i {
+            margin-right: 0.5rem;
+        }
+        
+        .back-to-home {
+            color: white;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            transform: translateX(-5px);
+            color: white;
+        }
+        
+        .back-to-home i {
+            margin-right: 0.5rem;
+        }
+
+        .chat-container {
+            flex: 1;
+            max-width: 1000px;
+            margin: 2rem auto;
+            width: 100%;
+            padding: 0 1rem;
+        }
+        
+        .chat-interface {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            height: calc(100vh - 12rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+        }
+        
+        .chat-info {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-page">
+        <header class="chat-header">
+            <div class="container chat-header-content">
+                <a href="/" class="chat-logo">
+                    <i class="fas fa-futbol"></i>
+                    <span>NutmegAI</span>
+                </a>
+
+            </div>
+        </header>
+
+        <div class="chat-container">
+
+            
+            <div class="chat-interface">
+                <div id="chat-box" class="chat-box">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h2>Welcome to NutmegAI</h2>
+                        <p>Your AI-powered football assistant.</p>
+ 
+                    </div>
+                </div>
+
+                <form id="chat-form" class="input-container">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            class="input-field"
+                            id="message-input" 
+                            autocomplete="off" 
+                            placeholder="Ask me about football..." 
+                            required 
+                        />
+                        <button type="button" class="input-action" title="Add attachment">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="send-button" aria-label="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('chat-form');
+        const input = document.getElementById('message-input');
+        const chatBox = document.getElementById('chat-box');
+        let chartInstances = [];
+
+        function appendMessage(sender, text) {
+            const msg = document.createElement('div');
+            msg.classList.add('message', sender);
+            
+            if (sender === 'bot') {
+                // Create wrapper for bot messages to apply the typing animation
+                const textWrapper = document.createElement('div');
+                textWrapper.classList.add('message-text');
+                textWrapper.innerHTML = text.replace(/\n/g, '<br>');  // Replace newlines with <br> tags
+                msg.appendChild(textWrapper);
+            } else {
+                msg.textContent = text;
+            }
+            
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            // Add appear animation class
+            setTimeout(() => {
+                msg.classList.add('visible');
+            }, 10);
+        }
+
+        function createInteractiveChart(chartData) {
+            const chartContainer = document.createElement('div');
+            chartContainer.classList.add('message', 'bot', 'chart-container');
+            
+            // Create canvas element for Chart.js
+            const canvas = document.createElement('canvas');
+            canvas.id = 'chart-' + Date.now();
+            chartContainer.appendChild(canvas);
+            
+            chatBox.appendChild(chartContainer);
+            
+            // Add appear animation class
+            setTimeout(() => {
+                chartContainer.classList.add('graph-loaded');
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 10);
+            
+            // Create chart using Chart.js
+            const ctx = canvas.getContext('2d');
+            const chart = new Chart(ctx, chartData);
+            
+            // Store chart instance in case we need to destroy it later
+            chartInstances.push(chart);
+            
+            return chart;
+        }
+
+        function showLoadingIndicator() {
+            const loadingMsg = document.createElement('div');
+            loadingMsg.classList.add('message', 'bot', 'loading-message');
+            loadingMsg.id = 'loading-indicator';
+            
+            // Add a small message above the facts tab
+            const waitMsg = document.createElement('div');
+            waitMsg.classList.add('wait-message');
+            waitMsg.textContent = 'Here are some football facts for you while you wait:';
+            loadingMsg.appendChild(waitMsg);
+            
+            // Create the fact container instead of dots
+            const factContainer = document.createElement('div');
+            factContainer.classList.add('fact-container');
+            factContainer.innerHTML = '<div class="football-icon"><i class="fas fa-futbol fa-spin"></i></div><p class="football-fact">Loading...</p>';
+            factContainer.title = "Click to see another fact";
+            
+            // Add click event to change facts immediately
+            factContainer.addEventListener('click', function() {
+                updateFootballFact(factContainer);
+            });
+            
+            loadingMsg.appendChild(factContainer);
+            chatBox.appendChild(loadingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            // Add appear animation class
+            setTimeout(() => {
+                loadingMsg.classList.add('visible');
+            }, 10);
+            
+            // Start fetching facts
+            fetchFootballFacts(factContainer);
+        }
+
+        async function fetchFootballFacts(factContainer) {
+            try {
+                const response = await fetch('/get_facts');
+                const data = await response.json();
+                
+                if (data.facts && data.facts.length > 0) {
+                    // Store facts globally to use them
+                    window.footballFacts = data.facts;
+                    
+                    // Update the fact immediately
+                    updateFootballFact(factContainer);
+                    
+                    // Set interval to change facts every 10 seconds
+                    window.factsInterval = setInterval(() => {
+                        // Only update if loading indicator still exists
+                        const loadingIndicator = document.getElementById('loading-indicator');
+                        if (loadingIndicator) {
+                            updateFootballFact(factContainer);
+                        } else {
+                            clearInterval(window.factsInterval);
+                        }
+                    }, 10000);
+                }
+            } catch (error) {
+                console.error('Error fetching football facts:', error);
+            }
+        }
+
+        function updateFootballFact(factContainer) {
+            if (window.footballFacts && window.footballFacts.length > 0) {
+                const factElement = factContainer.querySelector('.football-fact');
+                if (factElement) {
+                    const randomFact = window.footballFacts[Math.floor(Math.random() * window.footballFacts.length)];
+                    
+                    // Apply the animation
+                    factElement.classList.remove('fact-update');
+                    void factElement.offsetWidth; // Trigger reflow to restart animation
+                    factElement.classList.add('fact-update');
+                    
+                    // Update the text
+                    factElement.textContent = randomFact;
+                }
+            }
+        }
+
+        function removeLoadingIndicator() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            if (loadingIndicator) {
+                // Clear the facts interval
+                if (window.factsInterval) {
+                    clearInterval(window.factsInterval);
+                }
+                
+                loadingIndicator.classList.remove('visible');
+                setTimeout(() => {
+                    loadingIndicator.remove();
+                }, 300);
+            }
+        }
+
+        // Handle quick action buttons
+        document.querySelectorAll('.quick-action').forEach(button => {
+            button.addEventListener('click', () => {
+                const query = button.textContent.trim();
+                input.value = query;
+                form.dispatchEvent(new Event('submit'));
+            });
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = input.value.trim();
+            if (!message) return;
+            
+            appendMessage('user', message);
+            input.value = '';
+            
+            // Show loading indicator while waiting for response
+            showLoadingIndicator();
+            
+            try {
+                // Updated endpoint to chat_api
+                const response = await fetch('/chat_api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message }),
+                });
+                
+                const data = await response.json();
+                
+                // Remove loading indicator
+                removeLoadingIndicator();
+                
+                // Handle chart data if present
+                if (data.chart_data) {
+                    // First display the text response
+                    appendMessage('bot', data.response);
+                    
+                    // Then create the chart
+                    createInteractiveChart(data.chart_data);
+                } else {
+                    appendMessage('bot', data.response);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                removeLoadingIndicator();
+                appendMessage('bot', 'Sorry, there was an error processing your request.');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutboLM - AI-Powered Football Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Three.js for 3D elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+</head>
+<body>
+    <!-- 3D Background Canvas -->
+    <canvas id="background-canvas" class="background-3d"></canvas>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <p>We use cookies to enhance your browsing experience, analyze site traffic, and improve our services. By continuing to use our site, you agree to our use of cookies.</p>
+        <div class="cookie-actions">
+            <button id="accept-cookies" class="btn btn-primary">Accept</button>
+            <button id="decline-cookies" class="btn btn-outline">Decline</button>
+        </div>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-3d-container">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <span>FutboLM</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#use-cases">Use Cases</a></li>
+                    <li><a href="/chat" class="chat-link">Launch Chat <i class="fas fa-external-link-alt"></i></a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-3d-element"></div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Power Up Football Analysis</h1>
+                <p class="hero-subtitle">End manual research, dramatically boost your knowledge, and understand football like never before with an AI-driven platform.</p>
+                <div class="hero-buttons">
+                    <a href="/chat" class="btn btn-primary">Try the Assistant</a>
+                    <a href="#features" class="btn btn-outline">Learn more</a>
+                </div>
+            </div>
+        </div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </section>
+
+    <!-- News Banner -->
+    <section class="news-banner">
+        <div class="container">
+            <p><strong>News:</strong> FutboLM now supports advanced statistics analysis and team comparison features</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-bg-pattern"></div>
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Say Goodbye to Manual Research</h2>
+                <p>Stop wasting time searching through countless websites and articles. Automate football data analysis with FutboLM and focus on what truly matters: enjoying the game.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-content">
+                    <h3>Top analysts are eliminating guesswork, streamlining research, and elevating their football knowledge.</h3>
+                    <p>Join the AI revolution—eliminate busywork, access deep insights, and understand the game at a new level with FutboLM.</p>
+                    <a href="/chat" class="btn btn-primary">Try Now</a>
+                </div>
+                <div class="feature-image">
+                    <div class="feature-3d-container">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Use Cases</h2>
+                <p>Solutions tailored for football fans. Engineered for deeper insights.</p>
+            </div>
+            <div class="use-case-cards">
+                <div class="use-case-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="use-case-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="use-case-number">01</span>
+                    <h4>Player Analysis</h4>
+                    <p>Get detailed statistics and insights about any football player worldwide, from performance metrics to career history.</p>
+                </div>
+                <div class="use-case-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="use-case-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="use-case-number">02</span>
+                    <h4>Team Comparison</h4>
+                    <p>Compare teams head-to-head with detailed statistics, historical matchups, and performance trends.</p>
+                </div>
+                <div class="use-case-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="use-case-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <span class="use-case-number">03</span>
+                    <h4>Competition Insights</h4>
+                    <p>Explore league tables, tournament statistics, and competition histories with AI-powered analytics.</p>
+                </div>
+                <div class="use-case-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="use-case-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <span class="use-case-number">04</span>
+                    <h4>Match Summaries</h4>
+                    <p>Get detailed match reports, key events, and tactical breakdowns for recent and historical matches.</p>
+                </div>
+                <div class="use-case-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="use-case-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <span class="use-case-number">05</span>
+                    <h4>Visual Analytics</h4>
+                    <p>Visualize football data with interactive charts and graphs to understand trends and patterns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-bg-pattern"></div>
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2>Ready to Start Your Football Analysis Journey?</h2>
+                <p>Our AI-powered assistant is waiting to answer your questions and provide insights on football's most intriguing topics.</p>
+                <a href="/chat" class="btn btn-primary">Launch Chat Assistant</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>How FutboLM Works</h2>
+                <p>Simple, powerful, and built for football enthusiasts</p>
+            </div>
+            
+            <div class="steps-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h4>Ask a Question</h4>
+                    <p>Type any football-related query about players, teams, matches, or statistics.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>AI Research</h4>
+                    <p>Our AI searches through trusted football databases and sources to find accurate information.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Smart Analysis</h4>
+                    <p>The AI processes the data, draws connections, and generates insights.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h4>Visualized Results</h4>
+                    <p>Get detailed answers with text, statistics, and interactive charts when applicable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Queries -->
+    <section class="example-queries">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Try These Questions</h2>
+                <p>Example queries to get you started</p>
+            </div>
+            
+            <div class="query-cards" data-aos="fade-up" data-aos-delay="200">
+                <a href="/chat?q=Who%20scored%20the%20most%20goals%20in%20the%20Premier%20League%20last%20season%3F" class="query-card">
+                    <i class="fas fa-award"></i>
+                    <p>"Who scored the most goals in the Premier League last season?"</p>
+                </a>
+                
+                <a href="/chat?q=Compare%20Lionel%20Messi%20and%20Cristiano%20Ronaldo%20stats" class="query-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>"Compare Lionel Messi and Cristiano Ronaldo stats"</p>
+                </a>
+                
+                <a href="/chat?q=Show%20me%20Manchester%20City%27s%20performance%20this%20season" class="query-card">
+                    <i class="fas fa-chart-line"></i>
+                    <p>"Show me Manchester City's performance this season"</p>
+                </a>
+                
+                <a href="/chat?q=What%20was%20the%20result%20of%20the%20last%20Champions%20League%20final%3F" class="query-card">
+                    <i class="fas fa-trophy"></i>
+                    <p>"What was the result of the last Champions League final?"</p>
+                </a>
+            </div>
+            
+            <div class="example-cta" data-aos="fade-up" data-aos-delay="300">
+                <a href="/chat" class="btn btn-primary">Try Your Own Question</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Copyright © 2024 FutboLM. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animation and 3D Libraries -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false,
+            mirror: true
+        });
+
+        // Three.js Background
+        let scene, camera, renderer, particles;
+        
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('background-canvas'),
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
+            
+            // Add particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.005,
+                color: '#2a52be',
+                transparent: true,
+                opacity: 0.5
+            });
+            
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+            
+            camera.position.z = 3;
+            
+            animateBackground();
+        }
+        
+        function animateBackground() {
+            requestAnimationFrame(animateBackground);
+            
+            particles.rotation.x += 0.0001;
+            particles.rotation.y += 0.0002;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        function handleResize() {
+            if (renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Initialize Three.js scene after the page loads
+        window.addEventListener('load', initThreeJS);
+
+        // Floating shapes animation with GSAP
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach(shape => {
+            gsap.to(shape, {
+                y: `random(-20, 20)`,
+                x: `random(-20, 20)`,
+                rotation: `random(-15, 15)`,
+                duration: `random(3, 6)`,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+        
+        // Cookie banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookiesBtn = document.getElementById('accept-cookies');
+        const declineCookiesBtn = document.getElementById('decline-cookies');
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            cookieBanner.classList.add('hidden');
+            // Here you would set a cookie to remember the user's choice
+        });
+
+        declineCookiesBtn.addEventListener('click', () => {
+            cookieBanner.classList.add('hidden');
+            // Here you would handle the declined cookies state
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                mobileMenuToggle.classList.toggle('active');
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

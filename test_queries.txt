@@ -1,0 +1,68 @@
+# Football Data Analysis System - Test Queries
+# This file contains test queries for the football data analysis system along with expected results
+# and explanations of features being tested.
+
+## Basic Player Statistics Queries
+# These queries retrieve player data from fbref.com
+
+QUERY 1: "How many goals has Lionel Messi scored in his career?"
+
+QUERY 2: "Compare the career goal statistics of Cristiano Ronaldo and Lionel Messi"
+FEATURE: Multiple player comparison
+EXPECTED: A comparison of goal statistics between two players
+OUTPUT: [To be filled during execution]
+
+## Team Statistics Queries
+# These queries retrieve team data from fbref.com
+
+QUERY 3: "How did Real Madrid perform in La Liga in the 2022-23 season?"
+FEATURE: Team season data lookup
+EXPECTED: Details about Real Madrid's performance in that specific season
+OUTPUT: [To be filled during execution]
+
+QUERY 4: "Compare Barcelona and Real Madrid's performance in La Liga over the past 3 seasons"
+FEATURE: Team comparison across multiple seasons
+EXPECTED: Comparison of key statistics between the teams
+OUTPUT: [To be filled during execution]
+
+## Competition Statistics Queries
+# These queries retrieve data about specific competitions
+
+QUERY 5: "Who were the top goal scorers in the Premier League 2023-24 season?"
+FEATURE: Competition leaderboard retrieval
+EXPECTED: A list of top scorers in the specified competition and season
+OUTPUT: [To be filled during execution]
+
+## Graph Generation Queries
+# These queries test the graph generation capabilities
+
+QUERY 6: "Show me the goals scored by Bayern Munich in the last 3 Bundesliga seasons in a graph"
+FEATURE: Graph generation for team performance
+EXPECTED: A graph showing goals scored across seasons
+OUTPUT: [To be filled during execution]
+
+QUERY 7: "Create a graphical comparison of Real Madrid vs Barcelona match results in El Clasico over the last 4 matches"
+FEATURE: Graph generation for match comparison
+EXPECTED: A bar graph comparing scores in recent El Clasico matches
+OUTPUT: [To be filled during execution]
+
+## Match Summary Queries
+# These queries test the ESPN match summary scraper
+
+QUERY 8: "Provide a detailed summary of the Champions League final between Manchester City and Inter Milan in 2023"
+FEATURE: Match summary retrieval
+EXPECTED: A detailed match report including key moments and analysis
+OUTPUT: [To be filled during execution]
+
+## Multiple Feature Queries
+# These queries test combinations of features
+
+QUERY 9: "Compare Kylian Mbappe's goal scoring record before and after joining Real Madrid. Include a graph of his performance."
+FEATURE: Player statistics across teams with graph generation
+EXPECTED: Statistical analysis with graphical representation
+OUTPUT: [To be filled during execution]
+
+QUERY 10: "Which team had the best defensive record in the top 5 European leagues last season? Provide a graph comparing the top 3 teams."
+FEATURE: Cross-competition comparison with graph generation
+EXPECTED: Analysis of defensive statistics with graphical comparison
+OUTPUT: [To be filled during execution] 
